@@ -1,0 +1,89 @@
+Commit: 60d39d2438164452c46144afc3f0ace501720b2b
+Run: 5
+Result: success
+
+== Errors and warnings in our sources ==
+
+== Other errors ==
+
+== Last 80 lines of build log ==
+    cd /Users/runner/work/send-to-pc/send-to-pc
+    builtin-swiftHeaderTool -arch arm64 /Users/runner/work/send-to-pc/send-to-pc/build/Build/Intermediates.noindex/PCDrop.build/Release-iphoneos/PCDrop.build/Objects-normal/arm64/PCDrop-Swift.h -o /Users/runner/work/send-to-pc/send-to-pc/build/Build/Intermediates.noindex/PCDrop.build/Release-iphoneos/PCDrop.build/DerivedSources/PCDrop-Swift.h
+
+Copy /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.swiftmodule/arm64-apple-ios.swiftmodule /Users/runner/work/send-to-pc/send-to-pc/build/Build/Intermediates.noindex/PCDrop.build/Release-iphoneos/PCDrop.build/Objects-normal/arm64/PCDrop.swiftmodule (in target 'PCDrop' from project 'PCDrop')
+    cd /Users/runner/work/send-to-pc/send-to-pc
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/send-to-pc/send-to-pc/build/Build/Intermediates.noindex/PCDrop.build/Release-iphoneos/PCDrop.build/Objects-normal/arm64/PCDrop.swiftmodule /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.swiftmodule/arm64-apple-ios.swiftmodule
+
+Copy /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.swiftmodule/arm64-apple-ios.swiftdoc /Users/runner/work/send-to-pc/send-to-pc/build/Build/Intermediates.noindex/PCDrop.build/Release-iphoneos/PCDrop.build/Objects-normal/arm64/PCDrop.swiftdoc (in target 'PCDrop' from project 'PCDrop')
+    cd /Users/runner/work/send-to-pc/send-to-pc
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/send-to-pc/send-to-pc/build/Build/Intermediates.noindex/PCDrop.build/Release-iphoneos/PCDrop.build/Objects-normal/arm64/PCDrop.swiftdoc /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.swiftmodule/arm64-apple-ios.swiftdoc
+
+Copy /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.swiftmodule/arm64-apple-ios.abi.json /Users/runner/work/send-to-pc/send-to-pc/build/Build/Intermediates.noindex/PCDrop.build/Release-iphoneos/PCDrop.build/Objects-normal/arm64/PCDrop.abi.json (in target 'PCDrop' from project 'PCDrop')
+    cd /Users/runner/work/send-to-pc/send-to-pc
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/send-to-pc/send-to-pc/build/Build/Intermediates.noindex/PCDrop.build/Release-iphoneos/PCDrop.build/Objects-normal/arm64/PCDrop.abi.json /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.swiftmodule/arm64-apple-ios.abi.json
+
+Copy /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo /Users/runner/work/send-to-pc/send-to-pc/build/Build/Intermediates.noindex/PCDrop.build/Release-iphoneos/PCDrop.build/Objects-normal/arm64/PCDrop.swiftsourceinfo (in target 'PCDrop' from project 'PCDrop')
+    cd /Users/runner/work/send-to-pc/send-to-pc
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/send-to-pc/send-to-pc/build/Build/Intermediates.noindex/PCDrop.build/Release-iphoneos/PCDrop.build/Objects-normal/arm64/PCDrop.swiftsourceinfo /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo
+
+Ld /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app/PCDrop normal (in target 'PCDrop' from project 'PCDrop')
+    cd /Users/runner/work/send-to-pc/send-to-pc
+    /Applications/Xcode_27.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0 -isysroot /Applications/Xcode_27.1.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.1.sdk -Os -Xlinker -no_warn_duplicate_libraries -L/Users/runner/work/send-to-pc/send-to-pc/build/Build/Intermediates.noindex/EagerLinkingTBDs/Release-iphoneos -L/Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos -F/Users/runner/work/send-to-pc/send-to-pc/build/Build/Intermediates.noindex/EagerLinkingTBDs/Release-iphoneos -F/Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos -filelist /Users/runner/work/send-to-pc/send-to-pc/build/Build/Intermediates.noindex/PCDrop.build/Release-iphoneos/PCDrop.build/Objects-normal/arm64/PCDrop.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /Users/runner/work/send-to-pc/send-to-pc/build/Build/Intermediates.noindex/PCDrop.build/Release-iphoneos/PCDrop.build/Objects-normal/arm64/PCDrop_lto.o -Xlinker -dependency_info -Xlinker /Users/runner/work/send-to-pc/send-to-pc/build/Build/Intermediates.noindex/PCDrop.build/Release-iphoneos/PCDrop.build/Objects-normal/arm64/PCDrop_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode_27.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/runner/work/send-to-pc/send-to-pc/build/Build/Intermediates.noindex/PCDrop.build/Release-iphoneos/PCDrop.build/Objects-normal/arm64/PCDrop.swiftmodule -o /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app/PCDrop
+
+Copy /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app/PlugIns/PCDropShare.appex /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDropShare.appex (in target 'PCDrop' from project 'PCDrop')
+    cd /Users/runner/work/send-to-pc/send-to-pc
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks -remove-static-executable /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDropShare.appex /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app/PlugIns
+
+ProcessInfoPlistFile /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app/Info.plist /Users/runner/work/send-to-pc/send-to-pc/App/Info.plist (in target 'PCDrop' from project 'PCDrop')
+    cd /Users/runner/work/send-to-pc/send-to-pc
+    builtin-infoPlistUtility /Users/runner/work/send-to-pc/send-to-pc/App/Info.plist -producttype com.apple.product-type.application -genpkginfo /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app/PkgInfo -expandbuildsettings -format binary -platform iphoneos -additionalcontentfile /Users/runner/work/send-to-pc/send-to-pc/build/Build/Intermediates.noindex/PCDrop.build/Release-iphoneos/PCDrop.build/assetcatalog_generated_info.plist -scanforprivacyfile /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app/PlugIns/PCDropShare.appex -requiredArchitecture arm64 -o /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app/Info.plist
+
+ExtractAppIntentsMetadata (in target 'PCDrop' from project 'PCDrop')
+    cd /Users/runner/work/send-to-pc/send-to-pc
+    /Applications/Xcode_27.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v27.1.266.1.qlQGx2/Metal.xctoolchain --module-name PCDrop --sdk-root /Applications/Xcode_27.1.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.1.sdk --xcode-version 27A9275 --platform-family iOS --deployment-target 17.0 --bundle-identifier com.kevin.pcdrop --output /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app --target-triple arm64-apple-ios17.0 --binary-file /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app/PCDrop --dependency-file /Users/runner/work/send-to-pc/send-to-pc/build/Build/Intermediates.noindex/PCDrop.build/Release-iphoneos/PCDrop.build/Objects-normal/arm64/PCDrop_dependency_info.dat --stringsdata-file /Users/runner/work/send-to-pc/send-to-pc/build/Build/Intermediates.noindex/PCDrop.build/Release-iphoneos/PCDrop.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/runner/work/send-to-pc/send-to-pc/build/Build/Intermediates.noindex/PCDrop.build/Release-iphoneos/PCDrop.build/Objects-normal/arm64/PCDrop.SwiftFileList --metadata-file-list /Users/runner/work/send-to-pc/send-to-pc/build/Build/Intermediates.noindex/PCDrop.build/Release-iphoneos/PCDrop.build/PCDrop.DependencyMetadataFileList --static-metadata-file-list /Users/runner/work/send-to-pc/send-to-pc/build/Build/Intermediates.noindex/PCDrop.build/Release-iphoneos/PCDrop.build/PCDrop.DependencyStaticMetadataFileList --swift-const-vals-list /Users/runner/work/send-to-pc/send-to-pc/build/Build/Intermediates.noindex/PCDrop.build/Release-iphoneos/PCDrop.build/Objects-normal/arm64/PCDrop.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --no-app-shortcuts-localization
+2026-11-25 03:08:11.805 appintentsmetadataprocessor[7550:24562] Starting appintentsmetadataprocessor export
+2026-11-25 03:08:11.807 appintentsmetadataprocessor[7550:24562] warning: Metadata extraction skipped, no AppIntents.framework dependency found
+
+CopySwiftLibs /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app (in target 'PCDrop' from project 'PCDrop')
+    cd /Users/runner/work/send-to-pc/send-to-pc
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app/PCDrop --scan-folder /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app/Frameworks --scan-folder /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app/PlugIns --scan-folder /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app/SystemExtensions --scan-folder /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app/Extensions --platform iphoneos --toolchain /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v27.1.266.1.qlQGx2/Metal.xctoolchain --toolchain /Applications/Xcode_27.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode_27.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/runner/work/send-to-pc/send-to-pc/build/Build/Intermediates.noindex/PCDrop.build/Release-iphoneos/PCDrop.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+Ignoring --strip-bitcode because --sign was not passed
+
+ValidateEmbeddedBinary /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app/PlugIns/PCDropShare.appex (in target 'PCDrop' from project 'PCDrop')
+    cd /Users/runner/work/send-to-pc/send-to-pc
+    /Applications/Xcode_27.1.app/Contents/Developer/usr/bin/embeddedBinaryValidationUtility /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app/PlugIns/PCDropShare.appex -info-plist-path /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app/Info.plist
+warning: Embedded binary's NSExtensionActivationRule is TRUEPREDICATE. Before you submit your containing app to the App Store, be sure to replace all uses of TRUEPREDICATE with specific predicate statements or NSExtensionActivationRule keys. If any extensions in your containing app include TRUEPREDICATE, the app will be rejected.
+
+GenerateDSYMFile /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app.dSYM /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app/PCDrop (in target 'PCDrop' from project 'PCDrop')
+    cd /Users/runner/work/send-to-pc/send-to-pc
+    export PATH\=/Applications/Xcode_27.1.app/Contents/SharedFrameworks/SwiftBuild.framework/Versions/A/PlugIns/SWBBuildService.bundle/Contents/PlugIns/SWBUniversalPlatformPlugin.bundle/Contents/Frameworks/SWBUniversalPlatform.framework/Resources:/var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v27.1.266.1.qlQGx2/Metal.xctoolchain/usr/bin:/var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v27.1.266.1.qlQGx2/Metal.xctoolchain/usr/local/bin:/var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v27.1.266.1.qlQGx2/Metal.xctoolchain/usr/libexec:/Applications/Xcode_27.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:/Applications/Xcode_27.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/local/bin:/Applications/Xcode_27.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/libexec:/Applications/Xcode_27.1.app/Contents/Developer/Platforms/iPhoneOS.platform/usr/bin:/Applications/Xcode_27.1.app/Contents/Developer/Platforms/iPhoneOS.platform/usr/local/bin:/Applications/Xcode_27.1.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Applications/Xcode_27.1.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/local/bin:/Applications/Xcode_27.1.app/Contents/Developer/usr/bin:/Applications/Xcode_27.1.app/Contents/Developer/usr/local/bin:/opt/homebrew/opt/rustup/bin:/opt/homebrew/lib/ruby/gems/3.4.0/bin:/opt/homebrew/opt/ruby@3.4/bin:/Users/runner/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/runner/.cargo/bin:/usr/local/opt/curl/bin:/usr/local/bin:/usr/local/sbin:/Users/runner/bin:/Users/runner/.yarn/bin:/Users/runner/Library/Android/sdk/tools:/Users/runner/Library/Android/sdk/platform-tools:/Library/Frameworks/Python.framework/Versions/Current/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/usr/bin:/bin:/usr/sbin:/sbin:/Users/runner/.dotnet/tools
+    /Applications/Xcode_27.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/dsymutil /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app/PCDrop -o /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app.dSYM
+
+AppIntentsSSUTraining (in target 'PCDrop' from project 'PCDrop')
+    cd /Users/runner/work/send-to-pc/send-to-pc
+    /Applications/Xcode_27.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsnltrainingprocessor --infoplist-path /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app/Info.plist --temp-dir-path /Users/runner/work/send-to-pc/send-to-pc/build/Build/Intermediates.noindex/PCDrop.build/Release-iphoneos/PCDrop.build/ssu --bundle-id com.kevin.pcdrop --product-path /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app --extracted-metadata-path /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app/Metadata.appintents --metadata-file-list /Users/runner/work/send-to-pc/send-to-pc/build/Build/Intermediates.noindex/PCDrop.build/Release-iphoneos/PCDrop.build/PCDrop.DependencyMetadataFileList --source-file /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app/Info.plist --archive-ssu-assets
+2026-11-25 03:08:11.930 appintentsnltrainingprocessor[7553:24567] Parsing options for appintentsnltrainingprocessor
+2026-11-25 03:08:11.931 appintentsnltrainingprocessor[7553:24567] Starting AppIntents SSU YAML Generation
+2026-11-25 03:08:11.931 appintentsnltrainingprocessor[7553:24567] No AppShortcuts found - Skipping.
+
+RegisterExecutionPolicyException /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app (in target 'PCDrop' from project 'PCDrop')
+    cd /Users/runner/work/send-to-pc/send-to-pc
+    builtin-RegisterExecutionPolicyException /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app
+
+Validate /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app (in target 'PCDrop' from project 'PCDrop')
+    cd /Users/runner/work/send-to-pc/send-to-pc
+    builtin-validationUtility /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app -shallow-bundle -infoplist-subpath Info.plist
+warning: All interface orientations must be supported unless the app requires full screen. (in target 'PCDrop' from project 'PCDrop')
+
+Touch /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app (in target 'PCDrop' from project 'PCDrop')
+    cd /Users/runner/work/send-to-pc/send-to-pc
+    /usr/bin/touch -c /Users/runner/work/send-to-pc/send-to-pc/build/Build/Products/Release-iphoneos/PCDrop.app
+
+PruneExplicitPrecompiledModules /Users/runner/work/send-to-pc/send-to-pc/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/runner/work/send-to-pc/send-to-pc/build/SDKExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/runner/work/send-to-pc/send-to-pc/build/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+** BUILD SUCCEEDED **
+
