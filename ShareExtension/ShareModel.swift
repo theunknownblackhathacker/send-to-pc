@@ -29,6 +29,9 @@ final class ShareModel: ObservableObject {
     @Published var running = false
     @Published var server: String = PCDropConfig.server
     @Published var token: String = PCDropConfig.token
+    @Published var convertHEIC: Bool = PCDropConfig.convertHEIC {
+        didSet { PCDropConfig.convertHEIC = convertHEIC }
+    }
 
     private let context: NSExtensionContext?
     private var jobs: [Job] = []
@@ -117,7 +120,9 @@ final class ShareModel: ObservableObject {
                 if rows[index].icon == "shippingbox" { rows[index].icon = "text.alignleft" }
                 try await uploader.sendText(text)
                 sentTexts.insert(key)
-            case .file(let url, let name):
+            case .file(let original, _):
+                let url = FileHelpers.jpegIfHEIC(original)
+                let name = url.lastPathComponent
                 rows[index].title = name
                 let size = FileHelpers.size(of: url)
                 rows[index].detail = ByteCountFormatter.string(fromByteCount: size, countStyle: .file)

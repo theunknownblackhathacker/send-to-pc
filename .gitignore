@@ -22,3 +22,4 @@ server/index.json.tmp
 Thumbs.db
 __pycache__/
 server/pcdrop.log
+server/pcdrop_clipboard.ps1

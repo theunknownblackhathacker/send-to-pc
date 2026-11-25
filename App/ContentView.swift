@@ -5,6 +5,7 @@ import UniformTypeIdentifiers
 struct ContentView: View {
     @State private var server = PCDropConfig.server
     @State private var token = PCDropConfig.token
+    @State private var convertHEIC = PCDropConfig.convertHEIC
     @State private var status = ""
     @State private var statusOK = true
     @State private var busy = false
@@ -32,6 +33,7 @@ struct ContentView: View {
                     SecureField("Token (optional)", text: $token)
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled()
+                    Toggle("Send HEIC photos as JPG", isOn: $convertHEIC)
                     Button {
                         Task { await test() }
                     } label: {
@@ -41,7 +43,7 @@ struct ContentView: View {
                 } header: {
                     Text("PC server (this app)")
                 } footer: {
-                    Text("The share screen has its own server field at the bottom. Default for both: \(PCDropConfig.defaultServer)")
+                    Text("The share screen has its own settings at the bottom. Default server for both: \(PCDropConfig.defaultServer). Everything sent lands on the PC clipboard — just Ctrl+V.")
                 }
 
                 Section("Send from here") {
@@ -72,6 +74,7 @@ struct ContentView: View {
             .navigationTitle("PC Drop")
             .onChange(of: server) { PCDropConfig.server = server }
             .onChange(of: token) { PCDropConfig.token = token }
+            .onChange(of: convertHEIC) { PCDropConfig.convertHEIC = convertHEIC }
             .fileImporter(isPresented: $showImporter,
                           allowedContentTypes: [.item],
                           allowsMultipleSelection: true) { result in
@@ -109,7 +112,7 @@ struct ContentView: View {
         for (i, url) in urls.enumerated() {
             do {
                 status = "Preparing \(url.lastPathComponent)…"
-                let copy = try FileHelpers.coordinatedCopy(url, into: dir)
+                let copy = FileHelpers.jpegIfHEIC(try FileHelpers.coordinatedCopy(url, into: dir))
                 let name = copy.lastPathComponent
                 try await uploader.sendFile(copy, name: name) { fraction in
                     Task { @MainActor in

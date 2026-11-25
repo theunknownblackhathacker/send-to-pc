@@ -4,6 +4,17 @@ Send anything from the iPhone to the PC, from the share sheet — links, text, p
 any file, folders (zipped), several items at once. Nothing goes through a cloud: the phone talks
 straight to `server/server.py` on the PC (home network or NordVPN Meshnet).
 
+Every file type works (.ipa, .zip, .jar, .iso, ...), any size: files are streamed, never loaded
+into memory. On the PC, everything received is saved under its original name in `server/received/`
+**and put on the Windows clipboard** — just Ctrl+V:
+
+- text / link → pastes as text
+- files → paste in Explorer, Discord, WhatsApp, Telegram, ... (items sent together paste together)
+- a single photo → also pastes as a picture (Paint, Word, chat boxes). HEIC photos are sent as JPG
+  (toggle in the app / share screen)
+
+Turn auto-copy off with `set PCDROP_CLIPBOARD=0`. The dashboard has a **Copy on PC** button per item.
+
 ## Parts
 
 | Path | What |

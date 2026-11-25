@@ -1,4 +1,5 @@
 import Foundation
+import ImageIO
 import UniformTypeIdentifiers
 
 /// Where the PC server is. Each target (app, share extension) keeps its own copy in its own
@@ -11,6 +12,12 @@ enum PCDropConfig {
     static var server: String {
         get { UserDefaults.standard.string(forKey: serverKey) ?? defaultServer }
         set { UserDefaults.standard.set(newValue.trimmingCharacters(in: .whitespacesAndNewlines), forKey: serverKey) }
+    }
+
+    /// Convert iPhone HEIC/HEIF photos to JPG before sending (Windows can paste JPG as a picture).
+    static var convertHEIC: Bool {
+        get { UserDefaults.standard.object(forKey: "convertHEIC") as? Bool ?? true }
+        set { UserDefaults.standard.set(newValue, forKey: "convertHEIC") }
     }
 
     static var token: String {
@@ -176,6 +183,26 @@ enum FileHelpers {
     static func write(_ data: Data, name: String, into dir: URL) throws -> URL {
         let out = try uniqueURL(in: dir, name: name)
         try data.write(to: out)
+        return out
+    }
+
+    /// HEIC/HEIF photo -> JPG next to it (keeps EXIF, orientation, location). Returns the new
+    /// file, or the original if it isn't HEIC, the setting is off, or conversion fails.
+    static func jpegIfHEIC(_ url: URL) -> URL {
+        let ext = url.pathExtension.lowercased()
+        guard PCDropConfig.convertHEIC, ext == "heic" || ext == "heif" else { return url }
+        guard let source = CGImageSourceCreateWithURL(url as CFURL, nil),
+              CGImageSourceGetCount(source) > 0 else { return url }
+        let out = url.deletingPathExtension().appendingPathExtension("jpg")
+        guard let dest = CGImageDestinationCreateWithURL(out as CFURL, UTType.jpeg.identifier as CFString, 1, nil)
+        else { return url }
+        let options = [kCGImageDestinationLossyCompressionQuality: 0.92] as CFDictionary
+        CGImageDestinationAddImageFromSource(dest, source, 0, options)
+        guard CGImageDestinationFinalize(dest) else {
+            try? FileManager.default.removeItem(at: out)
+            return url
+        }
+        try? FileManager.default.removeItem(at: url)
         return out
     }
 
