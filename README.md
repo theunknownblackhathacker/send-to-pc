@@ -5,8 +5,9 @@ any file, folders (zipped), several items at once. Nothing goes through a cloud:
 straight to `server/server.py` on the PC (home network or NordVPN Meshnet).
 
 Every file type works (.ipa, .zip, .jar, .iso, ...), any size: files are streamed, never loaded
-into memory. On the PC, everything received is saved under its original name in `server/received/`
-**and put on the Windows clipboard** — just Ctrl+V:
+into memory. On the PC, files are saved like browser downloads — original name, in your **Downloads** folder
+(change it on the dashboard; only the PC itself can change it) — **and put on the Windows
+clipboard**, just Ctrl+V:
 
 - text / link → pastes as text
 - files → paste in Explorer, Discord, WhatsApp, Telegram, ... (items sent together paste together)
