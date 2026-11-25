@@ -43,9 +43,10 @@ targets:
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
         ITSAppUsesNonExemptEncryption: false
+        # Only this key: if NSAllowsLocalNetworking is also present, iOS ignores
+        # NSAllowsArbitraryLoads and blocks plain http to the Meshnet IP (100.x).
         NSAppTransportSecurity:
           NSAllowsArbitraryLoads: true
-          NSAllowsLocalNetworking: true
         NSLocalNetworkUsageDescription: PC Drop sends what you share to your own PC.
 
   PCDropShare:
@@ -65,9 +66,10 @@ targets:
         CFBundleDisplayName: PC Drop
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        # Only this key: if NSAllowsLocalNetworking is also present, iOS ignores
+        # NSAllowsArbitraryLoads and blocks plain http to the Meshnet IP (100.x).
         NSAppTransportSecurity:
           NSAllowsArbitraryLoads: true
-          NSAllowsLocalNetworking: true
         NSLocalNetworkUsageDescription: PC Drop sends what you share to your own PC.
         NSExtension:
           NSExtensionPointIdentifier: com.apple.share-services

@@ -70,8 +70,8 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("PC Drop")
-            .onChange(of: server) { _ in PCDropConfig.server = server }
-            .onChange(of: token) { _ in PCDropConfig.token = token }
+            .onChange(of: server) { PCDropConfig.server = server }
+            .onChange(of: token) { PCDropConfig.token = token }
             .fileImporter(isPresented: $showImporter,
                           allowedContentTypes: [.item],
                           allowsMultipleSelection: true) { result in
