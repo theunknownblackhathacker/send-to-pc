@@ -5,16 +5,9 @@ any file, folders (zipped), several items at once. Nothing goes through a cloud:
 straight to `server/server.py` on the PC (home network or NordVPN Meshnet).
 
 Every file type works (.ipa, .zip, .jar, .iso, ...), any size: files are streamed, never loaded
-into memory. On the PC, files are saved like browser downloads — original name, in your **Downloads** folder
-(change it on the dashboard; only the PC itself can change it) — **and put on the Windows
-clipboard**, just Ctrl+V:
-
-- text / link → pastes as text
-- files → paste in Explorer, Discord, WhatsApp, Telegram, ... (items sent together paste together)
-- a single photo → also pastes as a picture (Paint, Word, chat boxes). HEIC photos are sent as JPG
-  (toggle in the app / share screen)
-
-Turn auto-copy off with `set PCDROP_CLIPBOARD=0`. The dashboard has a **Copy on PC** button per item.
+into memory. On the PC, files are saved like browser downloads — original name (`name (2).ext` on a clash),
+in your **Downloads** folder. Change the folder on the dashboard (only the PC itself can change it).
+Nothing is ever put on the clipboard. HEIC photos can be sent as JPG (toggle in the app).
 
 ## Parts
 

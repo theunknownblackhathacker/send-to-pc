@@ -43,7 +43,7 @@ struct ContentView: View {
                 } header: {
                     Text("PC server (this app)")
                 } footer: {
-                    Text("The share screen has its own settings at the bottom. Default server for both: \(PCDropConfig.defaultServer). Everything sent lands on the PC clipboard — just Ctrl+V.")
+                    Text("The share screen has its own settings at the bottom. Default server for both: \(PCDropConfig.defaultServer).")
                 }
 
                 Section("Send from here") {

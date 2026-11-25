@@ -5,7 +5,7 @@ No dependencies. Python 3.8+. Stdlib only.
 
 Run:   python server.py
 Send from the PC Drop iPhone app (share sheet), an iOS Shortcut, or any browser.
-Everything received is put on the Windows clipboard: just Ctrl+V.
+Nothing is ever put on the clipboard.
 
 Files are saved like browser downloads: in your Downloads folder by default (change it on
 the dashboard, or set PCDROP_SAVE_DIR). Text and links are listed on the dashboard.
@@ -118,155 +118,11 @@ INDEX_LOCK = threading.Lock()
 
 
 def add_item(item):
-    """Append one received item to index.json (thread-safe) and put it on the PC clipboard."""
+    """Append one received item to index.json (thread-safe)."""
     with INDEX_LOCK:
         items = load_index()
         items.append(item)
         save_index(items)
-    Clipboard.put_item(item)
-
-
-# ---------------------------------------------------------------------------
-# PC clipboard: everything received is ready to paste with Ctrl+V.
-#   text/link   -> text
-#   file(s)     -> file list (paste in Explorer, Discord, WhatsApp, Telegram, ...)
-#   one image   -> also as a picture (paste in Paint, Word, chat boxes, ...)
-# Items arriving within BATCH_SECONDS of each other are pasted together.
-# Turn off with:  set PCDROP_CLIPBOARD=0
-# ---------------------------------------------------------------------------
-
-CLIP_PS1 = r"""
-param([string]$Mode, [string]$In)
-$ErrorActionPreference = 'Stop'
-Add-Type -AssemblyName System.Windows.Forms
-Add-Type -AssemblyName System.Drawing
-$data = New-Object System.Windows.Forms.DataObject
-if ($Mode -eq 'text') {
-    $t = [System.IO.File]::ReadAllText($In, [System.Text.Encoding]::UTF8)
-    $data.SetText($t, [System.Windows.Forms.TextDataFormat]::UnicodeText)
-} else {
-    $paths = [System.IO.File]::ReadAllLines($In, [System.Text.Encoding]::UTF8)
-    $list = New-Object System.Collections.Specialized.StringCollection
-    foreach ($p in $paths) { if ($p) { [void]$list.Add($p) } }
-    $data.SetFileDropList($list)
-    if ($list.Count -eq 1) {
-        $ext = [System.IO.Path]::GetExtension($list[0]).ToLower()
-        if (@('.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tif', '.tiff', '.webp') -contains $ext) {
-            try {
-                $bytes = [System.IO.File]::ReadAllBytes($list[0])
-                $ms = New-Object System.IO.MemoryStream(, $bytes)
-                $img = [System.Drawing.Image]::FromStream($ms)
-                $o = 0
-                try { $o = $img.GetPropertyItem(0x0112).Value[0] } catch {}
-                switch ($o) {
-                    2 { $img.RotateFlip([System.Drawing.RotateFlipType]::RotateNoneFlipX) }
-                    3 { $img.RotateFlip([System.Drawing.RotateFlipType]::Rotate180FlipNone) }
-                    4 { $img.RotateFlip([System.Drawing.RotateFlipType]::Rotate180FlipX) }
-                    5 { $img.RotateFlip([System.Drawing.RotateFlipType]::Rotate90FlipX) }
-                    6 { $img.RotateFlip([System.Drawing.RotateFlipType]::Rotate90FlipNone) }
-                    7 { $img.RotateFlip([System.Drawing.RotateFlipType]::Rotate270FlipX) }
-                    8 { $img.RotateFlip([System.Drawing.RotateFlipType]::Rotate270FlipNone) }
-                }
-                $bmp = New-Object System.Drawing.Bitmap($img)
-                $data.SetImage($bmp)
-                $png = New-Object System.IO.MemoryStream
-                $bmp.Save($png, [System.Drawing.Imaging.ImageFormat]::Png)
-                $data.SetData('PNG', $false, $png)
-            } catch {
-                Write-Output ('image part skipped: ' + $_.Exception.Message)
-            }
-        }
-    }
-}
-[System.Windows.Forms.Clipboard]::SetDataObject($data, $true, 20, 100)
-Write-Output 'ok'
-"""
-
-
-class Clipboard:
-    ENABLED = os.name == "nt" and os.environ.get("PCDROP_CLIPBOARD", "1") != "0"
-    BATCH_SECONDS = 8
-
-    _queue = []            # pending jobs; only the newest one matters
-    _cond = threading.Condition()
-    _batch = []            # file paths of the current batch
-    _batch_time = 0.0
-    _thread = None
-    _script = os.path.join(HERE, "pcdrop_clipboard.ps1")
-
-    @classmethod
-    def start(cls):
-        if not cls.ENABLED:
-            return
-        with open(cls._script, "w", encoding="utf-8-sig") as f:
-            f.write(CLIP_PS1)
-        cls._thread = threading.Thread(target=cls._worker, daemon=True)
-        cls._thread.start()
-
-    @classmethod
-    def put_item(cls, item):
-        if item.get("kind") == "file":
-            cls.put_file(item_path(item))
-        elif item.get("text"):
-            cls.put_text(item["text"])
-
-    @classmethod
-    def put_text(cls, text):
-        if not cls.ENABLED:
-            return
-        with cls._cond:
-            cls._batch = []
-            cls._queue.append(("text", text))
-            cls._cond.notify()
-
-    @classmethod
-    def put_file(cls, path, fresh=False):
-        if not cls.ENABLED:
-            return
-        with cls._cond:
-            now = time.time()
-            if fresh or not cls._batch or now - cls._batch_time > cls.BATCH_SECONDS:
-                cls._batch = []
-            if path not in cls._batch:
-                cls._batch.append(path)
-            cls._batch_time = now
-            cls._queue.append(("files", list(cls._batch)))
-            cls._cond.notify()
-
-    @classmethod
-    def _worker(cls):
-        import subprocess
-        import tempfile
-        while True:
-            with cls._cond:
-                while not cls._queue:
-                    cls._cond.wait()
-                mode, payload = cls._queue[-1]   # newest wins (it includes the whole batch)
-                cls._queue.clear()
-            try:
-                fd, tmp = tempfile.mkstemp(prefix="pcdrop_", suffix=".txt")
-                with os.fdopen(fd, "w", encoding="utf-8") as f:
-                    f.write(payload if mode == "text" else "\n".join(payload))
-                flags = getattr(subprocess, "CREATE_NO_WINDOW", 0)
-                r = subprocess.run(
-                    ["powershell.exe", "-NoProfile", "-NonInteractive", "-STA",
-                     "-ExecutionPolicy", "Bypass", "-File", cls._script, "-Mode", mode, "-In", tmp],
-                    capture_output=True, text=True, timeout=60, creationflags=flags)
-                out = (r.stdout + r.stderr).strip()
-                if r.returncode == 0 and out.endswith("ok"):
-                    what = "text" if mode == "text" else "%d file(s)" % len(payload)
-                    log("  -> on PC clipboard: %s (Ctrl+V)" % what)
-                    if "skipped" in out:
-                        log("     " + out.splitlines()[0])
-                else:
-                    log("  -> clipboard failed: %s" % (out[-300:] or r.returncode))
-            except Exception as e:
-                log("  -> clipboard failed: %s" % e)
-            finally:
-                try:
-                    os.remove(tmp)
-                except Exception:
-                    pass
 
 
 def safe_name(name):
@@ -469,23 +325,6 @@ class Handler(BaseHTTPRequestHandler):
                     total += len(chunk)
         return total
 
-    def _clip(self):
-        from urllib.parse import parse_qs
-        q = parse_qs(self.path.split("?", 1)[1] if "?" in self.path else "")
-        item_id = (q.get("id") or [""])[0]
-        self._read_body()
-        if not Clipboard.ENABLED:
-            return self._send(400, "clipboard is only available on Windows", "text/plain")
-        for it in load_index():
-            if it.get("id") == item_id:
-                if it.get("kind") == "file":
-                    Clipboard.put_file(item_path(it), fresh=True)
-                else:
-                    Clipboard.put_text(it.get("text", ""))
-                log("Copy on PC: %s" % (it.get("name") or it.get("text", "")[:60]))
-                return self._send(200, "ok", "text/plain")
-        return self._send(404, "not found", "text/plain")
-
     def _is_local(self):
         return self.client_address[0] in ("127.0.0.1", "::1")
 
@@ -535,8 +374,6 @@ class Handler(BaseHTTPRequestHandler):
         return self._send(200, "ok", "text/plain")
 
     def do_POST(self):
-        if self.path.startswith("/clip"):
-            return self._clip()
         if self.path.startswith("/config"):
             return self._config()
         if self.path.startswith("/reveal"):
@@ -642,7 +479,7 @@ a{color:#7cb3ff}.row{display:flex;gap:8px;align-items:center}.grow{flex:1}
 small{color:#8b93a1}.meta2{color:#8b93a1;font-size:13px}
 button.alt{background:#2c333f}.missing{opacity:.5}
 </style></head><body>
-<header><h1>PC Drop</h1><small>local only - everything you send is also on this PC's clipboard: just Ctrl+V</small></header>
+<header><h1>PC Drop</h1><small>local only - things sent from your phone show up here</small></header>
 <main>
 <div class=up>
  <div class=meta2>Files are saved to</div>
@@ -669,13 +506,11 @@ async function load(){
    if(it.missing)d.classList.add('missing');
    d.innerHTML=`<div class=txt>📎 <a href="/file?id=${it.id}">${nm}</a>`
     +`<div class=meta>${(it.size/1024).toFixed(1)} KB · ${when}${it.missing?' · moved or deleted':''}</div></div>`
-    +`<button class=alt onclick="reveal('${it.id}')">Show</button>`
-    +`<button onclick="clip('${it.id}',this)">Copy on PC</button>`;
+    +`<button class=alt onclick="reveal('${it.id}')">Show</button>`;
   }else{
    let safe=it.text.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
    let link=/^https?:\\/\\//.test(it.text)?`<a href="${it.text}" target=_blank>${safe}</a>`:safe;
-   d.innerHTML=`<div class=txt>${link}<div class=meta>${when}</div></div>`
-    +`<button onclick="clip('${it.id}',this)">Copy on PC</button>`;
+   d.innerHTML=`<div class=txt>${link}<div class=meta>${when}</div></div>`;
   }
   L.appendChild(d);
  }
@@ -688,8 +523,6 @@ async function saveDir(){let v=document.getElementById('dir').value;
  let r=await fetch('/config',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({save_dir:v})});
  let t=await r.text();document.getElementById('dirnote').textContent=r.ok?'Saved ✓  '+t:t;if(r.ok)loadCfg();}
 async function reveal(id){await fetch('/reveal?id='+id,{method:'POST'});}
-async function clip(id,b){let r=await fetch('/clip?id='+id,{method:'POST'});
- b.textContent=r.ok?'Copied ✓':'Failed';setTimeout(()=>b.textContent='Copy on PC',1500);}
 async function sendText(){let v=document.getElementById('t').value;if(!v)return;
  let fd=new FormData();fd.append('data',v);await fetch('/send',{method:'POST',body:fd});
  document.getElementById('t').value='';load();}
@@ -727,8 +560,6 @@ def main():
         tag = "  <- Meshnet" if ip.startswith("100.") else ""
         print("  From phone:           http://%s:%d%s" % (ip, PORT, tag))
     print("  Files saved to:       %s" % save_dir())
-    Clipboard.start()
-    print("  Auto-copy to clipboard: %s" % ("ON (Ctrl+V to paste)" if Clipboard.ENABLED else "off"))
     if TOKEN:
         print("  Token auth: ON")
     print("Ctrl+C to stop.")

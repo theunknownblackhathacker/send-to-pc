@@ -31,7 +31,7 @@ struct ShareView: View {
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled()
                         .onSubmit { model.saveSettings() }
-                    Toggle("Photos as JPG (pasteable)", isOn: $model.convertHEIC)
+                    Toggle("Send HEIC photos as JPG", isOn: $model.convertHEIC)
                 } header: {
                     Text("PC server")
                 } footer: {
