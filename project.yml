@@ -1,0 +1,88 @@
+# XcodeGen spec — the single source of truth for the Xcode project.
+# CI runs `xcodegen generate`; the .xcodeproj and Info.plist files are generated and git-ignored.
+name: PCDrop
+
+options:
+  bundleIdPrefix: com.kevin
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+  groupSortPosition: top
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: "1"
+    TARGETED_DEVICE_FAMILY: "1"
+    DEAD_CODE_STRIPPING: YES
+
+targets:
+  PCDrop:
+    type: application
+    platform: iOS
+    sources:
+      - path: App
+      - path: Shared
+    dependencies:
+      - target: PCDropShare   # embedded into PCDrop.app/PlugIns
+    settings:
+      base:
+        PRODUCT_NAME: PCDrop
+        PRODUCT_BUNDLE_IDENTIFIER: com.kevin.pcdrop
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: PC Drop
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        UILaunchScreen: {}
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        ITSAppUsesNonExemptEncryption: false
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: true
+          NSAllowsLocalNetworking: true
+        NSLocalNetworkUsageDescription: PC Drop sends what you share to your own PC.
+
+  PCDropShare:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: ShareExtension
+      - path: Shared
+    settings:
+      base:
+        PRODUCT_NAME: PCDropShare
+        # Must stay prefixed by the app's bundle ID, or iOS rejects the extension.
+        PRODUCT_BUNDLE_IDENTIFIER: com.kevin.pcdrop.share
+    info:
+      path: ShareExtension/Info.plist
+      properties:
+        CFBundleDisplayName: PC Drop
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: true
+          NSAllowsLocalNetworking: true
+        NSLocalNetworkUsageDescription: PC Drop sends what you share to your own PC.
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.share-services
+          NSExtensionPrincipalClass: ShareViewController
+          NSExtensionAttributes:
+            # Accept anything: links, text, photos, videos, files, folders, several at once.
+            NSExtensionActivationRule: TRUEPREDICATE
+
+schemes:
+  PCDrop:
+    build:
+      targets:
+        PCDrop: all
+        PCDropShare: all
+    run:
+      config: Debug
+    archive:
+      config: Release
